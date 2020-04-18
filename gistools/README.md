@@ -7,3 +7,10 @@ docker run --rm -v $(pwd):/mnt acicarizona/gistools --csv "/mnt/2020-01-08.csv" 
 ```
 ## Editing GPS coordinates of TIF images
 The script `edit_gps.py` edits the corner coordinates within your TIF file. Just feed it the directory where your files are located and a CSV file with your coordinates which must contain the headers: Filename, Upper left, Lower right.
+
+## Using GDAL to create mosaic of tif images
+```
+gdalbuildvrt mosaic.vrt <directory>/*.tif
+
+gdal_translate -co COMPRESS=LZW -co BIGTIFF=YES -outsize 10% 10% mosaic.vrt <output name>.tif
+```
