@@ -1,7 +1,7 @@
 FROM ubuntu:18.04
 
-WORKDIR /root
-COPY . ./
+WORKDIR /opt
+COPY . /opt
 
 USER root
 
@@ -27,6 +27,5 @@ RUN add-apt-repository ppa:ubuntugis/ppa
 RUN export CPLUS_INCLUDE_PATH=/usr/include/gdal
 RUN export C_INCLUDE_PATH=/usr/include/gdal
 
-ENTRYPOINT [ "python3", "edit_gps.py" ]
+ENTRYPOINT [ "/usr/bin/python3", "/opt/edit_gps.py" ]
 
-CMD ["dir", "-c"]
