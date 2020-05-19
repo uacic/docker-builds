@@ -1,0 +1,47 @@
+FROM ubuntu:18.04
+#FROM agdrone/drone-base-image:1.2
+
+WORKDIR /opt
+COPY . /opt
+
+USER root
+
+RUN apt-get update
+RUN apt-get install -y apt-utils \ 
+                       build-essential
+RUN apt-get update     
+
+# RUN add-apt-repository ppa:deadsnakes/ppa 
+RUN apt-get update
+
+RUN apt-get install -y python3.7-dev \
+                       python3-pip \
+                       wget \
+                       gdal-bin \
+                       libgdal-dev \
+                       libspatialindex-dev \
+                       software-properties-common
+#RUN  apt-get install -y --reinstall python3-apt
+RUN add-apt-repository ppa:ubuntugis/ubuntugis-unstable
+RUN apt-get update
+#RUN apt-get install -y libgdal-dev
+RUN apt-get install -y libatlas-base-dev
+#RUN apt-get install -y gdal-data
+RUN apt-get install -y equivs
+#RUN apt-get install -y libgdal20
+#RUN apt-get install -y liblas3
+#RUN apt-get install -y liblas-c3
+RUN apt-get install -y pdal
+# RUN apt-get -f install -y liblas-bin
+RUN pip3 install -U pip
+RUN pip3 install -r requirements.txt                       
+RUN wget http://download.osgeo.org/libspatialindex/spatialindex-src-1.7.1.tar.gz
+RUN tar -xvf spatialindex-src-1.7.1.tar.gz
+RUN cd spatialindex-src-1.7.1/ && ./configure && make && make install
+RUN ldconfig                       
+RUN add-apt-repository ppa:ubuntugis/ppa
+RUN export CPLUS_INCLUDE_PATH=/usr/include/gdal
+RUN export C_INCLUDE_PATH=/usr/include/gdal
+
+ENTRYPOINT [ "/usr/bin/python3", "/opt/plot_clip.py" ]
+

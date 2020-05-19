@@ -1,0 +1,16 @@
+opencv-python 
+numpy
+liblas
+terrautils
+laspy
+GDAL==3.0.4
+matplotlib
+rasterio
+shapely
+fiona
+pyproj
+geopandas
+earthpy
+Rtree
+earthpy
+seaborn
